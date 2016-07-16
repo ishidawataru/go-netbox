@@ -16,6 +16,7 @@ package netbox
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/url"
 	"path"
@@ -108,6 +109,10 @@ func (c *Client) do(req *http.Request, v interface{}) error {
 
 	if v == nil {
 		return nil
+	}
+
+	if res.StatusCode != http.StatusOK {
+		return fmt.Errorf("HTTP error, status: %s", res.Status)
 	}
 
 	return json.NewDecoder(res.Body).Decode(v)
