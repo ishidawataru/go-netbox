@@ -314,6 +314,27 @@ func testSiteIdentifier(n int) *SiteIdentifier {
 	}
 }
 
+func testRack(n int) *Rack {
+	return &Rack{
+		ID:          n,
+		Name:        fmt.Sprintf("Rack %d", n),
+		DisplayName: fmt.Sprintf("rack%d", n),
+		FacilityID:  fmt.Sprintf("Facility %d", n),
+		Site:        testSiteIdentifier(n),
+		Group:       testRackGroupIdentifier(n),
+		UHeight:     n,
+		Comments:    fmt.Sprintf("comment %d", n),
+	}
+}
+
+func testRackGroupIdentifier(n int) *RackGroupIdentifier {
+	return &RackGroupIdentifier{
+		ID:   n,
+		Name: fmt.Sprintf("RackIdentifier %d", n),
+		Slug: fmt.Sprintf("siteidentifier%d", n),
+	}
+}
+
 func testVLAN(n int) *VLAN {
 	return &VLAN{
 		ID:          n,

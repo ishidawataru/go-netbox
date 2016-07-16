@@ -14,9 +14,42 @@
 
 package netbox
 
+import (
+	"fmt"
+	"net/http"
+)
+
 // A DCIMService is used in a Client to access NetBox's DCIM API methods.
 type DCIMService struct {
 	c *Client
+}
+
+func (s *DCIMService) get(kind string, id int, v interface{}) error {
+	req, err := s.c.newRequest(
+		http.MethodGet,
+		fmt.Sprintf("/api/dcim/%s/%d", kind, id),
+		nil,
+	)
+	if err != nil {
+		return err
+	}
+
+	err = s.c.do(req, v)
+	return err
+}
+
+func (s *DCIMService) list(kind string, v interface{}) error {
+	req, err := s.c.newRequest(
+		http.MethodGet,
+		fmt.Sprintf("/api/dcim/%s/", kind),
+		nil,
+	)
+	if err != nil {
+		return err
+	}
+
+	err = s.c.do(req, v)
+	return err
 }
 
 // An InterfaceIdentifier is a reduced version of an Interface, returned as a
